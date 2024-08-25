@@ -23,7 +23,7 @@ jobs:
           distribution: 'microsoft'
 
       - name: Move to Server
-        run: cd crescendo-server
+        run: cd crescendo-server/src
 
       - name: Build with Gradle
         run: ./gradlew bootJar
