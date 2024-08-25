@@ -23,7 +23,9 @@ jobs:
           distribution: 'microsoft'
 
       - name: Build with Gradle
-        run: ./crescendo-server/gradlew bootJar
+        run: |
+          cd crescendo-server
+          ./gradlew bootJar
 
       - name: check build completed
         run: ls -al build/libs
