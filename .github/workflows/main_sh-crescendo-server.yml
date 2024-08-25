@@ -65,5 +65,5 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'sh-crescendo'
+          app-name: 'sh-crescendo-server'
           package: 'crescendo-server-0.0.1-SNAPSHOT.jar'
