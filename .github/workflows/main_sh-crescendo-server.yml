@@ -22,14 +22,8 @@ jobs:
           java-version: '17'
           distribution: 'microsoft'
 
-      - name: Move to Server
-        run: cd crescendo-server
-
-      - name: check
-        run: ls -al
-
       - name: Build with Gradle
-        run: gradlew bootJar
+        run: ./crescendo-server/gradlew bootJar
 
       - name: check build completed
         run: ls -al build/libs
