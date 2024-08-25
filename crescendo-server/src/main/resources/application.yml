@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://c-crescendo-database.niozuvgjoztwa6.postgres.cosmos.azure.com:5432/citus
+    url: jdbc:postgresql://c-crescendo-test-database.xlhmbgp5rdq6vn.postgres.cosmos.azure.com:5432/citus
     username: citus
     password: apple080915!
     driver-class-name: org.postgresql.Driver
