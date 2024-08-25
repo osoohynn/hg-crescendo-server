@@ -28,13 +28,13 @@ jobs:
           ./gradlew bootJar
 
       - name: check build completed
-        run: ls -al build/libs
+        run: ls -al crescendo-server/build/libs
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: 'build/libs/crescendo-server-0.0.1-SNAPSHOT.jar'
+          path: 'crescendo-server/build/libs/crescendo-server-0.0.1-SNAPSHOT.jar'
 
   deploy:
     runs-on: ubuntu-latest
