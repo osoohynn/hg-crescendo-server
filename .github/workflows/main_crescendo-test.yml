@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - crescendo-test
+name: Build and deploy WAR app to Azure Web App - sh-study-azure
 
 on:
   push:
@@ -22,14 +22,19 @@ jobs:
           java-version: '17'
           distribution: 'microsoft'
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Build with Gradle
+        run: |
+          cd crescendo-server
+          ./gradlew bootJar
+
+      - name: check build completed
+        run: ls -al crescendo-server/build/libs
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: 'crescendo-server/build/libs/crescendo-server-0.0.1-SNAPSHOT.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -39,25 +44,26 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
-  
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: java-app
-      
+
+      - name: Check Download Complete
+        run: ls -al
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D94A01B41A9042DF8F9E995314F3552A }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_3A226F7E37164195B2548CC5D0791315 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_519CACA1C0694A6484109084781349F3 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D59EDC969DD64B72AFD452B673A10F06 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5D4409B83378496FA3C9DFC1CD276C15 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3175DEB86B40415481768E3535122B96 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'crescendo-test'
-          slot-name: 'Production'
-          package: '*.jar'
-          
+          package: 'crescendo-server-0.0.1-SNAPSHOT.jar'
